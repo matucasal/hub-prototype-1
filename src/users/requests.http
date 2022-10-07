@@ -4,4 +4,4 @@
 POST http://localhost:3000/users
 content-type: application/json
 
-{ "name": "pepe", "surname": "perez", "email" : "admin@admin.com", "password" : "admin", "walletAddress" : "45454fsa54fasrqa" }
+{ "name": "234", "surname": "perez", "email" : "asdmsin@admin.com", "password" : "admin", "walletAddress" : "45454fsa54fasrqa" }
