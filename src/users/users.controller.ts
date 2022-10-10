@@ -4,10 +4,17 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  BadRequestException,
+  Get,
+  Param,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
+import { LoginDto } from './dtos/login.dto';
 import { Prisma, User as UserModel } from '@prisma/client';
+import { Request, Response } from 'express';
 
 @Controller('/users')
 export class UsersController {
@@ -38,4 +45,20 @@ export class UsersController {
       );
     }
   }
+
+  @Post('/login')
+  async login(
+    @Body() loginDto: LoginDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const token = await this.usersService.login(loginDto);
+
+    response.cookie('jwt', token, {
+      httpOnly: true,
+      domain: '.localhost',
+    });
+
+    return token;
+  }
 }
+

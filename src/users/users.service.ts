@@ -1,6 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { User, Prisma } from '@prisma/client';
+import { LoginDto } from './dtos/login.dto';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {
@@ -31,10 +38,24 @@ export class UsersService {
     });
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({
-      data,
+  async getUser(
+    filter: { id: number } | { email: string } | { walletAddress: string },
+  ) {
+    return this.prisma.user.findUnique({
+      where: filter,
     });
+  }
+
+  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+    const user = await this.prisma.user.create({
+      data: {
+        ...data,
+        password: await bcrypt.hash(data.password, 10),
+      },
+    });
+
+    delete user.password;
+    return user;
   }
 
   async updateUser(params: {
@@ -52,5 +73,27 @@ export class UsersService {
     return this.prisma.user.delete({
       where,
     });
+  }
+
+  async login(data: LoginDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const validPassword = await bcrypt.compare(data.password, user.password);
+
+    if (!validPassword) {
+      throw new BadRequestException('Invalid credentials');
+    }
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      issuer: 'asset-tokenization/users-api',
+    });
+
+    return token;
   }
 }
