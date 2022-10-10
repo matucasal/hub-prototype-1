@@ -12,3 +12,7 @@ POST http://localhost:3000/users/login
 content-type: application/json
 
 {"email" : "test1@admin.com", "password" : "admin"}
+
+
+### ME WHo am I
+POST http://localhost:3000/users/me

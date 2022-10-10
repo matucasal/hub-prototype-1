@@ -60,4 +60,13 @@ export class UsersController {
 
     return token;
   }
+
+  @Post('/me')
+  async me(@Req() request: Request) {
+    if (!request.cookies?.jwt) {
+      throw new BadRequestException('Not logged in');
+    } else {
+      return this.usersService.me(request.cookies.jwt);
+    }
+  }
 }

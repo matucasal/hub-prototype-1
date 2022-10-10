@@ -96,4 +96,16 @@ export class UsersService {
 
     return token;
   }
+
+  async me(token: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: (jwt.verify(token, process.env.JWT_SECRET) as unknown as any).id,
+      },
+    });
+
+    delete user.password;
+
+    return user;
+  }
 }
