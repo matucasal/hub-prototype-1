@@ -6,8 +6,8 @@ import {
 import { PrismaService } from '../prisma.service';
 import { User, Prisma } from '@prisma/client';
 import { LoginDto } from './dtos/login.dto';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UsersService {

@@ -4,4 +4,11 @@
 POST http://localhost:3000/users
 content-type: application/json
 
-{ "name": "234", "surname": "perez", "email" : "asdmdsdsin@admin.com", "password" : "admin", "walletAddress" : "45454dfsa54fasrqa" }
+{ "name": "234", "surname": "perez", "email" : "test1@admin.com", "password" : "admin", "walletAddress" : "45s45ds4dfsa54fasrqa" }
+
+
+### Login with new user
+POST http://localhost:3000/users/login
+content-type: application/json
+
+{"email" : "test1@admin.com", "password" : "admin"}
