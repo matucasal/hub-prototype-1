@@ -16,3 +16,6 @@ content-type: application/json
 
 ### ME WHo am I
 POST http://localhost:3000/users/me
+
+### Logout
+POST http://localhost:3000/users/logout

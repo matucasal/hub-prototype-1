@@ -72,4 +72,10 @@ export class UsersController {
       return this.usersService.me(request.cookies.jwt);
     }
   }
+
+  @Post('/logout')
+  @UseGuards(AuthGuard)
+  async logout(@Res({ passthrough: true }) res: Response) {
+    res.cookie('jwt', '', { expires: new Date() });
+  }
 }
