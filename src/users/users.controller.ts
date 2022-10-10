@@ -9,12 +9,14 @@ import {
   Param,
   Req,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { LoginDto } from './dtos/login.dto';
 import { Prisma, User as UserModel } from '@prisma/client';
 import { Request, Response } from 'express';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Controller('/users')
 export class UsersController {
@@ -62,6 +64,7 @@ export class UsersController {
   }
 
   @Post('/me')
+  @UseGuards(AuthGuard)
   async me(@Req() request: Request) {
     if (!request.cookies?.jwt) {
       throw new BadRequestException('Not logged in');
