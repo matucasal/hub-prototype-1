@@ -1,17 +1,17 @@
 
 ### Create a new user
 
-POST http://localhost:3000/users
+POST http://localhost:3000/auth/signup
 content-type: application/json
 
-{ "name": "234", "surname": "perez", "email" : "test1@admin.com", "password" : "admin", "walletAddress" : "45s45ds4dfsa54fasrqa" }
+{ "name": "234", "surname": "perez", "username":"test2", "email" : "test111@admin.com", "password" : "Aadmin123!", "walletAddress" : "45s45asds4sdfsa54fasrqa" }
 
 
 ### Login with new user
-POST http://localhost:3000/users/login
+POST http://localhost:3000/auth/login
 content-type: application/json
 
-{"email" : "test1@admin.com", "password" : "admin"}
+{"username" : "test2", "password" : "Aadmin123!"}
 
 
 ### ME WHo am I
