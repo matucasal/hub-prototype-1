@@ -8,6 +8,7 @@ import { User, Prisma } from '@prisma/client';
 import { LoginDto } from './dtos/login.dto';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
+import { CreateUserDto } from './dtos/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -46,12 +47,12 @@ export class UsersService {
     });
   }
 
-  async createUser(data: Prisma.UserCreateInput): Promise<User> {
+  async createUser(userData: CreateUserDto): Promise<User> {
+    const hashPassword = await bcrypt.hash(userData.password, 10);
+    //Hasheo la clave al data que le mando a la bd
+    const data = { ...userData, password: hashPassword };
     const user = await this.prisma.user.create({
-      data: {
-        ...data,
-        password: await bcrypt.hash(data.password, 10),
-      },
+      data,
     });
 
     delete user.password;
