@@ -13,7 +13,6 @@ dotenv.config();
 
 @Module({
   imports: [
-    UserModule,
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
