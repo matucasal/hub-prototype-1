@@ -15,10 +15,6 @@ content-type: application/json
 
 
 
-### Logout
-POST http://localhost:3000/auth/logout
-
-
 ### ME WHo am I
 GET http://localhost:3000/user/profile
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QyIiwiaWF0IjoxNjY1NDkyMDI2LCJleHAiOjE2NjU0OTIwODZ9.3qnUXLZhneFuqEBiiJ7PzURVDolXQ3Z0YiH0muRplbI
