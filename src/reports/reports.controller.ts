@@ -3,6 +3,8 @@ import { AuthGuard } from '../guards/auth.guard';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { ReportsService } from './reports.service';
 import { Request, Response } from 'express';
+import { CurrentUser } from '../decorators/current-user.decorator';
+import { User } from '@prisma/client';
 
 @Controller('reports')
 export class ReportsController {
@@ -10,10 +12,12 @@ export class ReportsController {
 
   @Post()
   @UseGuards(AuthGuard)
-  createReport(@Body() body: CreateReportDto, @Req() request: Request) {
-    console.log('request', request);
-    console.log('request.cookies.jwt', request.cookies.jwt);
-    console.log('request.user', request.user);
+  createReport(
+    @Body() body: CreateReportDto,
+    @Req() request: Request,
+    @CurrentUser() user: User,
+  ) {
+    console.log('user', user);
     return this.reportsService.create(body);
   }
 }

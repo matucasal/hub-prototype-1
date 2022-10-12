@@ -14,6 +14,7 @@ declare global {
 export class CurrentUserMiddleware implements NestMiddleware {
   constructor(private usersService: UsersService) {}
   async use(req: Request, res: Response, next: NextFunction) {
+    console.log('I am middlewared');
     const { jwt } = req.cookies || {};
     if (jwt) {
       const user = this.usersService.me(jwt);
